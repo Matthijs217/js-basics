@@ -25,6 +25,11 @@ function addCharacterToTeam(event) {
     firstEmptySlot.appendChild(deleteButton);
 
     updateCounterAndProgress(+1);
+
+    checkInteractivityOfCharacterList();
+
+    checkCompletenessOfTeam();
+
 }
 
 function removeCharacterFromTeam(event) {
@@ -36,7 +41,9 @@ function removeCharacterFromTeam(event) {
     characterImg.remove();
 
     updateCounterAndProgress(-1);
-}
+    checkInteractivityOfCharacterList();
+    checkCompletenessOfTeam();
+} 
 
 function updateCounterAndProgress( delta ) {
     progress.value = progress.value + delta;
@@ -47,3 +54,28 @@ function updateCounterAndProgress( delta ) {
     teamCounter.textContent = newCount;
 }
 
+function checkInteractivityOfCharacterList() {
+    const emptySlot = teamList.querySelector('li:empty');
+
+    if(emptySlot) {
+        charactersButtons.forEach(characterButton => {
+            characterButton.disabled = false;
+        })
+    }
+    else {
+        charactersButtons.forEach(characterButton => {
+            characterButton.disabled = true;
+        })
+    }
+}
+
+function checkCompletenessOfTeam() {
+    const emptySlot = teamList.querySelector('li:empty');
+
+    if(emptySlot) {
+        teamList.classList.remove('is-complete');
+    }
+    else {
+        teamList.classList.add('is-complete');
+    }
+}
